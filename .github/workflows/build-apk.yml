@@ -1,0 +1,44 @@
+name: Build FOSS debug APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup project and build environment
+        uses: ./.github/actions/common-setup
+
+      - name: Build FOSS debug APK
+        run: ./gradlew app:assembleFossDebug
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdmaid-glass-foss-debug
+          path: app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+
+      - name: Publish APK to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK=$(find app/build/outputs/apk -name '*.apk' | head -n 1)
+          gh release create "build-${{ github.run_number }}" "$APK" \
+            --repo "${{ github.repository }}" \
+            --title "Glass build ${{ github.run_number }}" \
+            --notes "FOSS debug APK, built by GitHub Actions."
