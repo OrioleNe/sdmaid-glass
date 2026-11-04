@@ -36,6 +36,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
 import eu.darken.sdmse.common.compose.settings.dialogs.SizeInputDialog
@@ -162,107 +164,111 @@ internal fun SqueezerSettingsScreen(
         ) {
             item { SettingsCategoryHeader(text = stringResource(R.string.squeezer_types_category_label)) }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Compress,
-                    title = stringResource(R.string.squeezer_type_jpeg_title),
-                    subtitle = stringResource(R.string.squeezer_type_jpeg_description),
-                    checked = state.includeJpeg,
-                    onCheckedChange = onIncludeJpegChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Compress,
-                    title = stringResource(R.string.squeezer_type_webp_title),
-                    subtitle = stringResource(R.string.squeezer_type_webp_description),
-                    checked = state.includeWebp,
-                    onCheckedChange = onIncludeWebpChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Compress,
+                        title = stringResource(R.string.squeezer_type_jpeg_title),
+                        subtitle = stringResource(R.string.squeezer_type_jpeg_description),
+                        checked = state.includeJpeg,
+                        onCheckedChange = onIncludeJpegChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Compress,
+                        title = stringResource(R.string.squeezer_type_webp_title),
+                        subtitle = stringResource(R.string.squeezer_type_webp_description),
+                        checked = state.includeWebp,
+                        onCheckedChange = onIncludeWebpChanged,
+                    )
+                }
             }
             if (state.isHeicSupported) {
                 item {
-                    SettingsSwitchItem(
-                        icon = Icons.TwoTone.Compress,
-                        title = stringResource(R.string.squeezer_type_heic_title),
-                        subtitle = stringResource(R.string.squeezer_type_heic_description),
-                        checked = state.includeHeic,
-                        onCheckedChange = onIncludeHeicChanged,
-                    )
+                    SettingsGroup {
+                        SettingsSwitchItem(
+                            icon = Icons.TwoTone.Compress,
+                            title = stringResource(R.string.squeezer_type_heic_title),
+                            subtitle = stringResource(R.string.squeezer_type_heic_description),
+                            checked = state.includeHeic,
+                            onCheckedChange = onIncludeHeicChanged,
+                        )
+                    }
                 }
             }
             item { SettingsCategoryHeader(text = stringResource(R.string.squeezer_protected_category_label)) }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.AutoAwesome,
-                    title = stringResource(R.string.squeezer_include_lossy_aux_title),
-                    subtitle = stringResource(R.string.squeezer_include_lossy_aux_description),
-                    checked = state.includeLossyAuxImages,
-                    onCheckedChange = onIncludeLossyAuxImagesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.MotionPhotosOn,
-                    title = stringResource(R.string.squeezer_include_motion_photos_title),
-                    subtitle = stringResource(R.string.squeezer_include_motion_photos_description),
-                    checked = state.includeMotionPhotos,
-                    onCheckedChange = onIncludeMotionPhotosChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PhotoSizeSelectLarge,
-                    title = stringResource(R.string.squeezer_include_oversized_title),
-                    subtitle = stringResource(R.string.squeezer_include_oversized_description),
-                    checked = state.includeOversizedImages,
-                    onCheckedChange = onIncludeOversizedImagesChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.AutoAwesome,
+                        title = stringResource(R.string.squeezer_include_lossy_aux_title),
+                        subtitle = stringResource(R.string.squeezer_include_lossy_aux_description),
+                        checked = state.includeLossyAuxImages,
+                        onCheckedChange = onIncludeLossyAuxImagesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.MotionPhotosOn,
+                        title = stringResource(R.string.squeezer_include_motion_photos_title),
+                        subtitle = stringResource(R.string.squeezer_include_motion_photos_description),
+                        checked = state.includeMotionPhotos,
+                        onCheckedChange = onIncludeMotionPhotosChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PhotoSizeSelectLarge,
+                        title = stringResource(R.string.squeezer_include_oversized_title),
+                        subtitle = stringResource(R.string.squeezer_include_oversized_description),
+                        checked = state.includeOversizedImages,
+                        onCheckedChange = onIncludeOversizedImagesChanged,
+                    )
+                }
             }
             item { SettingsCategoryHeader(text = stringResource(R.string.squeezer_video_settings_category_label)) }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Movie,
-                    title = stringResource(R.string.squeezer_type_video_title),
-                    subtitle = stringResource(R.string.squeezer_type_video_description),
-                    checked = state.includeVideo,
-                    onCheckedChange = onIncludeVideoChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Movie,
+                        title = stringResource(R.string.squeezer_type_video_title),
+                        subtitle = stringResource(R.string.squeezer_type_video_description),
+                        checked = state.includeVideo,
+                        onCheckedChange = onIncludeVideoChanged,
+                    )
+                }
             }
             item { SettingsCategoryHeader(text = stringResource(R.string.squeezer_compression_settings_label)) }
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
-                    title = stringResource(R.string.squeezer_min_size_title),
-                    subtitle = stringResource(R.string.squeezer_min_size_description) +
-                        "\n" + Formatter.formatShortFileSize(context, state.minSizeBytes),
-                    onClick = { showMinSizeDialog = true },
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.RotateRight,
-                    title = stringResource(R.string.squeezer_skip_compressed_title),
-                    subtitle = stringResource(R.string.squeezer_skip_compressed_description),
-                    checked = state.skipPreviouslyCompressed,
-                    onCheckedChange = onSkipPreviouslyCompressedChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.NewReleases,
-                    title = stringResource(R.string.squeezer_exif_marker_title),
-                    subtitle = stringResource(R.string.squeezer_exif_marker_description),
-                    checked = state.writeExifMarker,
-                    onCheckedChange = onWriteExifMarkerChanged,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.History,
-                    title = stringResource(R.string.squeezer_history_title),
-                    subtitle = historySummary,
-                    onClick = { showClearDialog = true },
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
+                        title = stringResource(R.string.squeezer_min_size_title),
+                        subtitle = stringResource(R.string.squeezer_min_size_description) +
+                            "\n" + Formatter.formatShortFileSize(context, state.minSizeBytes),
+                        onClick = { showMinSizeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.RotateRight,
+                        title = stringResource(R.string.squeezer_skip_compressed_title),
+                        subtitle = stringResource(R.string.squeezer_skip_compressed_description),
+                        checked = state.skipPreviouslyCompressed,
+                        onCheckedChange = onSkipPreviouslyCompressedChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.NewReleases,
+                        title = stringResource(R.string.squeezer_exif_marker_title),
+                        subtitle = stringResource(R.string.squeezer_exif_marker_description),
+                        checked = state.writeExifMarker,
+                        onCheckedChange = onWriteExifMarkerChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.History,
+                        title = stringResource(R.string.squeezer_history_title),
+                        subtitle = historySummary,
+                        onClick = { showClearDialog = true },
+                    )
+                }
             }
         }
     }

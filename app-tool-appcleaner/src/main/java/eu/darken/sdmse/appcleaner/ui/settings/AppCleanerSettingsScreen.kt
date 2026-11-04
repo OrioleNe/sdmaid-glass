@@ -50,6 +50,8 @@ import eu.darken.sdmse.common.access.AccessState
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.FeatureGateState
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingGate
 import eu.darken.sdmse.common.compose.settings.SettingsBadgedSwitchItem
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
@@ -230,273 +232,257 @@ internal fun AppCleanerSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Apps,
-                    title = stringResource(R.string.appcleaner_include_systemapps_label),
-                    subtitle = stringResource(R.string.appcleaner_include_systemapps_summary),
-                    checked = state.includeSystemApps,
-                    onCheckedChange = onIncludeSystemAppsChanged,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.Groups,
-                    title = stringResource(CommonR.string.general_include_multiuser_label),
-                    subtitle = stringResource(CommonR.string.general_include_multiuser_summary),
-                    checked = state.includeOtherUsers,
-                    onCheckedChange = onIncludeOtherUsersChanged,
-                    onBadgeClick = {
-                        gateClick(state.otherUsersGate, otherUsersBlockedMessage, onIncludeOtherUsersBadge)
-                    },
-                    gate = state.otherUsersGate.toSettingGate(),
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.RotateRight,
-                    title = stringResource(R.string.appcleaner_include_runningapps_label),
-                    subtitle = stringResource(R.string.appcleaner_include_runningapps_summary),
-                    checked = state.includeRunningApps,
-                    onCheckedChange = onIncludeRunningAppsChanged,
-                    onBadgeClick = onIncludeRunningAppsBadge,
-                    gate = if (state.isRunningAppsDetectionAvailable) null else SettingGate.SetupRequired,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
-                    title = stringResource(R.string.appcleaner_include_minimumsize_label),
-                    subtitle = stringResource(R.string.appcleaner_include_minimumsize_summary),
-                    value = Formatter.formatShortFileSize(context, state.minCacheSizeBytes),
-                    onClick = { showSizeDialog = true },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.History,
-                    title = stringResource(R.string.appcleaner_include_minimumage_label),
-                    subtitle = stringResource(R.string.appcleaner_include_minimumage_summary),
-                    value = formatAge(context, Duration.ofMillis(state.minCacheAgeMs)),
-                    onClick = { showAgeDialog = true },
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Apps,
+                        title = stringResource(R.string.appcleaner_include_systemapps_label),
+                        subtitle = stringResource(R.string.appcleaner_include_systemapps_summary),
+                        checked = state.includeSystemApps,
+                        onCheckedChange = onIncludeSystemAppsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.Groups,
+                        title = stringResource(CommonR.string.general_include_multiuser_label),
+                        subtitle = stringResource(CommonR.string.general_include_multiuser_summary),
+                        checked = state.includeOtherUsers,
+                        onCheckedChange = onIncludeOtherUsersChanged,
+                        onBadgeClick = {
+                            gateClick(state.otherUsersGate, otherUsersBlockedMessage, onIncludeOtherUsersBadge)
+                        },
+                        gate = state.otherUsersGate.toSettingGate(),
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.RotateRight,
+                        title = stringResource(R.string.appcleaner_include_runningapps_label),
+                        subtitle = stringResource(R.string.appcleaner_include_runningapps_summary),
+                        checked = state.includeRunningApps,
+                        onCheckedChange = onIncludeRunningAppsChanged,
+                        onBadgeClick = onIncludeRunningAppsBadge,
+                        gate = if (state.isRunningAppsDetectionAvailable) null else SettingGate.SetupRequired,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
+                        title = stringResource(R.string.appcleaner_include_minimumsize_label),
+                        subtitle = stringResource(R.string.appcleaner_include_minimumsize_summary),
+                        value = Formatter.formatShortFileSize(context, state.minCacheSizeBytes),
+                        onClick = { showSizeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.History,
+                        title = stringResource(R.string.appcleaner_include_minimumage_label),
+                        subtitle = stringResource(R.string.appcleaner_include_minimumage_summary),
+                        value = formatAge(context, Duration.ofMillis(state.minCacheAgeMs)),
+                        onClick = { showAgeDialog = true },
+                    )
+                }
             }
             if (state.isAcsRequired) {
                 item {
-                    SettingsBadgedSwitchItem(
-                        icon = Icons.TwoTone.FolderOff,
-                        title = stringResource(R.string.appcleaner_include_inaccessible_label),
-                        subtitle = stringResource(R.string.appcleaner_include_inaccessible_summary),
-                        checked = state.includeInaccessible,
-                        onCheckedChange = onIncludeInaccessibleChanged,
-                        onBadgeClick = onIncludeInaccessibleBadge,
-                        gate = if (state.isInaccessibleCacheAvailable) null else SettingGate.SetupRequired,
-                    )
-                }
-                item {
-                    SettingsBadgedSwitchItem(
-                        icon = Icons.TwoTone.Cancel,
-                        title = stringResource(R.string.appcleaner_forcestop_before_clearing_label),
-                        subtitle = stringResource(R.string.appcleaner_forcestop_before_clearing_summary),
-                        checked = state.forceStopBeforeClearing,
-                        onCheckedChange = onForceStopChanged,
-                        onBadgeClick = onForceStopBadge,
-                        gate = if (state.isInaccessibleCacheAvailable) null else SettingGate.SetupRequired,
-                    )
+                    SettingsGroup {
+                        SettingsBadgedSwitchItem(
+                            icon = Icons.TwoTone.FolderOff,
+                            title = stringResource(R.string.appcleaner_include_inaccessible_label),
+                            subtitle = stringResource(R.string.appcleaner_include_inaccessible_summary),
+                            checked = state.includeInaccessible,
+                            onCheckedChange = onIncludeInaccessibleChanged,
+                            onBadgeClick = onIncludeInaccessibleBadge,
+                            gate = if (state.isInaccessibleCacheAvailable) null else SettingGate.SetupRequired,
+                        )
+                        SettingsGroupDivider()
+                        SettingsBadgedSwitchItem(
+                            icon = Icons.TwoTone.Cancel,
+                            title = stringResource(R.string.appcleaner_forcestop_before_clearing_label),
+                            subtitle = stringResource(R.string.appcleaner_forcestop_before_clearing_summary),
+                            checked = state.forceStopBeforeClearing,
+                            onCheckedChange = onForceStopChanged,
+                            onBadgeClick = onForceStopBadge,
+                            gate = if (state.isInaccessibleCacheAvailable) null else SettingGate.SetupRequired,
+                        )
+                    }
                 }
             }
 
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.settings_category_filter_generic)) }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.appcleaner_filter_defaultcachespublic_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_defaultcachespublic_summary),
-                    checked = state.filterDefaultCachesPublic,
-                    onCheckedChange = onFilterDefaultCachesPublicChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.appcleaner_filter_defaultcachesprivate_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_defaultcachesprivate_summary),
-                    checked = state.filterDefaultCachesPrivate,
-                    onCheckedChange = onFilterDefaultCachesPrivateChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.VisibilityOff,
-                    title = stringResource(R.string.appcleaner_filter_hiddencaches_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_hiddencaches_summary),
-                    checked = state.filterHiddenCaches,
-                    onCheckedChange = onFilterHiddenCachesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PlayCircleOutline,
-                    title = stringResource(R.string.appcleaner_filter_thumbnails_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_thumbnails_summary),
-                    checked = state.filterThumbnails,
-                    onCheckedChange = onFilterThumbnailsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.appcleaner_filter_codecache_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_codecache_summary),
-                    checked = state.filterCodeCache,
-                    onCheckedChange = onFilterCodeCacheChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.AdsClick,
-                    title = stringResource(R.string.appcleaner_filter_advertisement_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_advertisement_summary),
-                    checked = state.filterAdvertisement,
-                    onCheckedChange = onFilterAdvertisementChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.BugReport,
-                    title = stringResource(R.string.appcleaner_filter_bugreporting_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_bugreporting_summary),
-                    checked = state.filterBugreporting,
-                    onCheckedChange = onFilterBugreportingChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Analytics,
-                    title = stringResource(R.string.appcleaner_filter_analytics_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_analytics_summary),
-                    checked = state.filterAnalytics,
-                    onCheckedChange = onFilterAnalyticsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    iconPainter = painterResource(UiR.drawable.ic_game_controller_24),
-                    title = stringResource(R.string.appcleaner_filter_gamefiles_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_gamefiles_summary),
-                    checked = state.filterGameFiles,
-                    onCheckedChange = onFilterGameFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.SignalCellularOff,
-                    title = stringResource(R.string.appcleaner_filter_offlinecache_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_offlinecache_summary),
-                    checked = state.filterOfflineCache,
-                    onCheckedChange = onFilterOfflineCacheChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.DeleteForever,
-                    title = stringResource(R.string.appcleaner_filter_recyclebins_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_recyclebins_summary),
-                    checked = state.filterRecycleBins,
-                    onCheckedChange = onFilterRecycleBinsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.Chrome,
-                    title = stringResource(R.string.appcleaner_filter_webview_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_webview_summary),
-                    checked = state.filterWebview,
-                    onCheckedChange = onFilterWebviewChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PhotoLibrary,
-                    title = stringResource(R.string.appcleaner_filter_shortcutservice_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_shortcutservice_summary),
-                    checked = state.filterShortcutService,
-                    onCheckedChange = onFilterShortcutServiceChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.appcleaner_filter_defaultcachespublic_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_defaultcachespublic_summary),
+                        checked = state.filterDefaultCachesPublic,
+                        onCheckedChange = onFilterDefaultCachesPublicChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.appcleaner_filter_defaultcachesprivate_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_defaultcachesprivate_summary),
+                        checked = state.filterDefaultCachesPrivate,
+                        onCheckedChange = onFilterDefaultCachesPrivateChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.VisibilityOff,
+                        title = stringResource(R.string.appcleaner_filter_hiddencaches_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_hiddencaches_summary),
+                        checked = state.filterHiddenCaches,
+                        onCheckedChange = onFilterHiddenCachesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PlayCircleOutline,
+                        title = stringResource(R.string.appcleaner_filter_thumbnails_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_thumbnails_summary),
+                        checked = state.filterThumbnails,
+                        onCheckedChange = onFilterThumbnailsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.appcleaner_filter_codecache_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_codecache_summary),
+                        checked = state.filterCodeCache,
+                        onCheckedChange = onFilterCodeCacheChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.AdsClick,
+                        title = stringResource(R.string.appcleaner_filter_advertisement_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_advertisement_summary),
+                        checked = state.filterAdvertisement,
+                        onCheckedChange = onFilterAdvertisementChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.BugReport,
+                        title = stringResource(R.string.appcleaner_filter_bugreporting_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_bugreporting_summary),
+                        checked = state.filterBugreporting,
+                        onCheckedChange = onFilterBugreportingChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Analytics,
+                        title = stringResource(R.string.appcleaner_filter_analytics_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_analytics_summary),
+                        checked = state.filterAnalytics,
+                        onCheckedChange = onFilterAnalyticsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        iconPainter = painterResource(UiR.drawable.ic_game_controller_24),
+                        title = stringResource(R.string.appcleaner_filter_gamefiles_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_gamefiles_summary),
+                        checked = state.filterGameFiles,
+                        onCheckedChange = onFilterGameFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.SignalCellularOff,
+                        title = stringResource(R.string.appcleaner_filter_offlinecache_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_offlinecache_summary),
+                        checked = state.filterOfflineCache,
+                        onCheckedChange = onFilterOfflineCacheChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.DeleteForever,
+                        title = stringResource(R.string.appcleaner_filter_recyclebins_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_recyclebins_summary),
+                        checked = state.filterRecycleBins,
+                        onCheckedChange = onFilterRecycleBinsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.Chrome,
+                        title = stringResource(R.string.appcleaner_filter_webview_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_webview_summary),
+                        checked = state.filterWebview,
+                        onCheckedChange = onFilterWebviewChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PhotoLibrary,
+                        title = stringResource(R.string.appcleaner_filter_shortcutservice_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_shortcutservice_summary),
+                        checked = state.filterShortcutService,
+                        onCheckedChange = onFilterShortcutServiceChanged,
+                    )
+                }
             }
 
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.settings_category_filter_specific)) }
             item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.WhatsApp,
-                    title = stringResource(R.string.appcleaner_filter_whatsapp_backups_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_whatsapp_backups_summary),
-                    checked = state.filterWhatsappBackups,
-                    onCheckedChange = onFilterWhatsappBackupsChanged,
-                )
-            }
-            item {
-                // Legacy XML intentionally swaps label/summary for this row — preserve for parity.
-                SettingsSwitchItem(
-                    icon = SdmIcons.WhatsApp,
-                    title = stringResource(R.string.appcleaner_filter_whatsapp_received_summary),
-                    subtitle = stringResource(R.string.appcleaner_filter_whatsapp_received_label),
-                    checked = state.filterWhatsappReceived,
-                    onCheckedChange = onFilterWhatsappReceivedChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.WhatsApp,
-                    title = stringResource(R.string.appcleaner_filter_whatsapp_sent_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_whatsapp_sent_summary),
-                    checked = state.filterWhatsappSent,
-                    onCheckedChange = onFilterWhatsappSentChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.Chat,
-                    title = stringResource(R.string.appcleaner_filter_telegram_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_telegram_summary),
-                    checked = state.filterTelegram,
-                    onCheckedChange = onFilterTelegramChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.Chat,
-                    title = stringResource(R.string.appcleaner_filter_threema_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_threema_summary),
-                    checked = state.filterThreema,
-                    onCheckedChange = onFilterThreemaChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.WeChat,
-                    title = stringResource(R.string.appcleaner_filter_wechat_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_wechat_summary),
-                    checked = state.filterWeChat,
-                    onCheckedChange = onFilterWeChatChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.Chat,
-                    title = stringResource(R.string.appcleaner_filter_viber_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_viber_summary),
-                    checked = state.filterViber,
-                    onCheckedChange = onFilterViberChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.Qq,
-                    title = stringResource(R.string.appcleaner_filter_qqchat_label),
-                    subtitle = stringResource(R.string.appcleaner_filter_qqchat_summary),
-                    checked = state.filterMobileQQ,
-                    onCheckedChange = onFilterMobileQQChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = SdmIcons.WhatsApp,
+                        title = stringResource(R.string.appcleaner_filter_whatsapp_backups_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_whatsapp_backups_summary),
+                        checked = state.filterWhatsappBackups,
+                        onCheckedChange = onFilterWhatsappBackupsChanged,
+                    )
+                    SettingsGroupDivider()
+                    // Legacy XML intentionally swaps label/summary for this row — preserve for parity.
+                    SettingsSwitchItem(
+                        icon = SdmIcons.WhatsApp,
+                        title = stringResource(R.string.appcleaner_filter_whatsapp_received_summary),
+                        subtitle = stringResource(R.string.appcleaner_filter_whatsapp_received_label),
+                        checked = state.filterWhatsappReceived,
+                        onCheckedChange = onFilterWhatsappReceivedChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.WhatsApp,
+                        title = stringResource(R.string.appcleaner_filter_whatsapp_sent_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_whatsapp_sent_summary),
+                        checked = state.filterWhatsappSent,
+                        onCheckedChange = onFilterWhatsappSentChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.Chat,
+                        title = stringResource(R.string.appcleaner_filter_telegram_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_telegram_summary),
+                        checked = state.filterTelegram,
+                        onCheckedChange = onFilterTelegramChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.Chat,
+                        title = stringResource(R.string.appcleaner_filter_threema_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_threema_summary),
+                        checked = state.filterThreema,
+                        onCheckedChange = onFilterThreemaChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.WeChat,
+                        title = stringResource(R.string.appcleaner_filter_wechat_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_wechat_summary),
+                        checked = state.filterWeChat,
+                        onCheckedChange = onFilterWeChatChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.Chat,
+                        title = stringResource(R.string.appcleaner_filter_viber_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_viber_summary),
+                        checked = state.filterViber,
+                        onCheckedChange = onFilterViberChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.Qq,
+                        title = stringResource(R.string.appcleaner_filter_qqchat_label),
+                        subtitle = stringResource(R.string.appcleaner_filter_qqchat_summary),
+                        checked = state.filterMobileQQ,
+                        onCheckedChange = onFilterMobileQQChanged,
+                    )
+                }
             }
         }
     }

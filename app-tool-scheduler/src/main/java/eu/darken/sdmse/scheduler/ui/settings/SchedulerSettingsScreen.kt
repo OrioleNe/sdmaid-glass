@@ -22,6 +22,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.error.ErrorEventHandler
 import eu.darken.sdmse.common.navigation.NavigationEventHandler
 import eu.darken.sdmse.scheduler.R
@@ -79,31 +81,31 @@ internal fun SchedulerSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.BatteryAlert,
-                    title = stringResource(R.string.scheduler_setting_nopowersaving_title),
-                    subtitle = stringResource(R.string.scheduler_setting_nopowersaving_summary),
-                    checked = state.skipWhenPowerSaving,
-                    onCheckedChange = onSkipPowerSavingChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PowerOff,
-                    title = stringResource(R.string.scheduler_setting_charging_title),
-                    subtitle = stringResource(R.string.scheduler_setting_charging_summary),
-                    checked = state.skipWhenNotCharging,
-                    onCheckedChange = onSkipNotChargingChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.AccessibilityNew,
-                    title = stringResource(R.string.scheduler_setting_automation_title),
-                    subtitle = stringResource(R.string.scheduler_setting_automation_summary),
-                    checked = state.useAutomation,
-                    onCheckedChange = onUseAutomationChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.BatteryAlert,
+                        title = stringResource(R.string.scheduler_setting_nopowersaving_title),
+                        subtitle = stringResource(R.string.scheduler_setting_nopowersaving_summary),
+                        checked = state.skipWhenPowerSaving,
+                        onCheckedChange = onSkipPowerSavingChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PowerOff,
+                        title = stringResource(R.string.scheduler_setting_charging_title),
+                        subtitle = stringResource(R.string.scheduler_setting_charging_summary),
+                        checked = state.skipWhenNotCharging,
+                        onCheckedChange = onSkipNotChargingChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.AccessibilityNew,
+                        title = stringResource(R.string.scheduler_setting_automation_title),
+                        subtitle = stringResource(R.string.scheduler_setting_automation_summary),
+                        checked = state.useAutomation,
+                        onCheckedChange = onUseAutomationChanged,
+                    )
+                }
             }
         }
     }

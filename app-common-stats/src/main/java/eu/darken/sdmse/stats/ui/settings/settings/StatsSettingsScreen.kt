@@ -29,6 +29,8 @@ import eu.darken.sdmse.common.compose.dialog.SdmConfirmDialog
 import eu.darken.sdmse.common.compose.dialog.SdmDialogAction
 import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.compose.settings.dialogs.AgeInputDialog
 import eu.darken.sdmse.common.error.ErrorEventHandler
@@ -195,48 +197,49 @@ internal fun StatsSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.BarChart,
-                    title = stringResource(CommonR.string.stats_label),
-                    subtitle = statsSummary,
-                    onClick = onViewStatsClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.BarChart,
+                        title = stringResource(CommonR.string.stats_label),
+                        subtitle = statsSummary,
+                        onClick = onViewStatsClick,
+                    )
+                }
             }
             item { SettingsCategoryHeader(text = stringResource(R.string.stats_settings_retention_category)) }
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.BarChart,
-                    title = stringResource(R.string.stats_settings_retention_reports_label),
-                    subtitle = stringResource(R.string.stats_settings_retention_reports_desc),
-                    value = formatAge(context, state.retentionReports),
-                    onClick = { showReportsAgeDialog = true },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Assessment,
-                    title = stringResource(R.string.stats_settings_retention_paths_label),
-                    subtitle = stringResource(R.string.stats_settings_retention_paths_desc),
-                    value = formatAge(context, state.retentionPaths),
-                    onClick = { showPathsAgeDialog = true },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.History,
-                    title = stringResource(R.string.stats_settings_retention_snapshots_label),
-                    subtitle = stringResource(R.string.stats_settings_retention_snapshots_desc),
-                    value = formatAge(context, state.retentionSnapshots),
-                    onClick = { showSnapshotsAgeDialog = true },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.SettingsBackupRestore,
-                    title = stringResource(R.string.stats_settings_reset_all_label),
-                    subtitle = resetSummary,
-                    onClick = { showResetAllDialog = true },
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.BarChart,
+                        title = stringResource(R.string.stats_settings_retention_reports_label),
+                        subtitle = stringResource(R.string.stats_settings_retention_reports_desc),
+                        value = formatAge(context, state.retentionReports),
+                        onClick = { showReportsAgeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Assessment,
+                        title = stringResource(R.string.stats_settings_retention_paths_label),
+                        subtitle = stringResource(R.string.stats_settings_retention_paths_desc),
+                        value = formatAge(context, state.retentionPaths),
+                        onClick = { showPathsAgeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.History,
+                        title = stringResource(R.string.stats_settings_retention_snapshots_label),
+                        subtitle = stringResource(R.string.stats_settings_retention_snapshots_desc),
+                        value = formatAge(context, state.retentionSnapshots),
+                        onClick = { showSnapshotsAgeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.SettingsBackupRestore,
+                        title = stringResource(R.string.stats_settings_reset_all_label),
+                        subtitle = resetSummary,
+                        onClick = { showResetAllDialog = true },
+                    )
+                }
             }
         }
     }

@@ -18,6 +18,6 @@ fun SettingsCategoryHeader(
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontWeight = FontWeight.Medium,
-        modifier = modifier.padding(start = 32.dp, end = 16.dp, top = 20.dp, bottom = 6.dp),
+        modifier = modifier.padding(start = 32.dp, end = 16.dp, top = 20.dp, bottom = 8.dp),
     )
 }

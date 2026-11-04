@@ -49,6 +49,8 @@ import eu.darken.sdmse.common.compose.icons.Ghost
 import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.icons.SdmIcons
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.error.ErrorEventHandler
 import eu.darken.sdmse.common.navigation.NavigationEventHandler
@@ -175,171 +177,160 @@ internal fun SettingsScreen(
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.settings_category_tools_label)) }
 
             item {
-                SettingsPreferenceItem(
-                    icon = SdmIcons.Ghost,
-                    title = stringResource(CommonR.string.corpsefinder_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.corpsefinder.R.string.corpsefinder_settings_summary),
-                    onClick = { onToolSettingsClick("CorpseFinder") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.ViewList,
-                    title = stringResource(CommonR.string.systemcleaner_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.systemcleaner.R.string.systemcleaner_explanation_short),
-                    onClick = { onToolSettingsClick("SystemCleaner") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Recycling,
-                    title = stringResource(CommonR.string.appcleaner_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_explanation_short),
-                    onClick = { onToolSettingsClick("AppCleaner") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.ContentCopy,
-                    title = stringResource(CommonR.string.deduplicator_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.deduplicator.R.string.deduplicator_explanation_short),
-                    onClick = { onToolSettingsClick("Deduplicator") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Apps,
-                    title = stringResource(CommonR.string.appcontrol_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.appcontrol.R.string.appcontrol_explanation_short),
-                    onClick = { onToolSettingsClick("AppControl") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Compress,
-                    title = stringResource(CommonR.string.squeezer_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.squeezer.R.string.squeezer_explanation_short),
-                    onClick = { onToolSettingsClick("Squeezer") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Swipe,
-                    title = stringResource(CommonR.string.swiper_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.swiper.R.string.swiper_tool_description),
-                    onClick = { onToolSettingsClick("Swiper") },
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.DataUsage,
-                    title = stringResource(CommonR.string.analyzer_tool_name),
-                    subtitle = stringResource(eu.darken.sdmse.analyzer.R.string.analyzer_explanation_short),
-                    onClick = { onToolSettingsClick("Analyzer") },
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = SdmIcons.Ghost,
+                        title = stringResource(CommonR.string.corpsefinder_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.corpsefinder.R.string.corpsefinder_settings_summary),
+                        onClick = { onToolSettingsClick("CorpseFinder") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.ViewList,
+                        title = stringResource(CommonR.string.systemcleaner_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.systemcleaner.R.string.systemcleaner_explanation_short),
+                        onClick = { onToolSettingsClick("SystemCleaner") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Recycling,
+                        title = stringResource(CommonR.string.appcleaner_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_explanation_short),
+                        onClick = { onToolSettingsClick("AppCleaner") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.ContentCopy,
+                        title = stringResource(CommonR.string.deduplicator_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.deduplicator.R.string.deduplicator_explanation_short),
+                        onClick = { onToolSettingsClick("Deduplicator") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Apps,
+                        title = stringResource(CommonR.string.appcontrol_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.appcontrol.R.string.appcontrol_explanation_short),
+                        onClick = { onToolSettingsClick("AppControl") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Compress,
+                        title = stringResource(CommonR.string.squeezer_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.squeezer.R.string.squeezer_explanation_short),
+                        onClick = { onToolSettingsClick("Squeezer") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Swipe,
+                        title = stringResource(CommonR.string.swiper_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.swiper.R.string.swiper_tool_description),
+                        onClick = { onToolSettingsClick("Swiper") },
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.DataUsage,
+                        title = stringResource(CommonR.string.analyzer_tool_name),
+                        subtitle = stringResource(eu.darken.sdmse.analyzer.R.string.analyzer_explanation_short),
+                        onClick = { onToolSettingsClick("Analyzer") },
+                    )
+                }
             }
 
             // Device category
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.general_device_label)) }
 
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Settings,
-                    title = stringResource(R.string.general_settings_label),
-                    subtitle = stringResource(R.string.general_settings_desc),
-                    onClick = onGeneralSettingsClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Shield,
-                    title = stringResource(eu.darken.sdmse.common.exclusion.R.string.exclusion_manager_title),
-                    subtitle = stringResource(eu.darken.sdmse.common.exclusion.R.string.exclusion_manager_desc),
-                    onClick = onExclusionsClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.BarChart,
-                    title = stringResource(CommonR.string.stats_label),
-                    subtitle = stringResource(eu.darken.sdmse.common.stats.R.string.stats_settings_desc),
-                    onClick = onStatsClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Alarm,
-                    title = stringResource(eu.darken.sdmse.scheduler.R.string.scheduler_settings_label),
-                    subtitle = stringResource(eu.darken.sdmse.scheduler.R.string.scheduler_settings_summary),
-                    onClick = onSchedulerClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.SettingsBackupRestore,
-                    title = stringResource(R.string.backup_restore_title),
-                    subtitle = stringResource(R.string.backup_restore_desc),
-                    onClick = onBackupRestoreClick,
-                )
-            }
-            item {
-                val setupTint: Color? = if (state.setupDone == false) MaterialTheme.colorScheme.tertiary else null
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.PhoneAndroid,
-                    iconTint = setupTint,
-                    title = stringResource(CommonR.string.setup_title),
-                    subtitle = stringResource(R.string.setup_forcedshow_summary),
-                    onClick = onSetupClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Settings,
+                        title = stringResource(R.string.general_settings_label),
+                        subtitle = stringResource(R.string.general_settings_desc),
+                        onClick = onGeneralSettingsClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Shield,
+                        title = stringResource(eu.darken.sdmse.common.exclusion.R.string.exclusion_manager_title),
+                        subtitle = stringResource(eu.darken.sdmse.common.exclusion.R.string.exclusion_manager_desc),
+                        onClick = onExclusionsClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.BarChart,
+                        title = stringResource(CommonR.string.stats_label),
+                        subtitle = stringResource(eu.darken.sdmse.common.stats.R.string.stats_settings_desc),
+                        onClick = onStatsClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Alarm,
+                        title = stringResource(eu.darken.sdmse.scheduler.R.string.scheduler_settings_label),
+                        subtitle = stringResource(eu.darken.sdmse.scheduler.R.string.scheduler_settings_summary),
+                        onClick = onSchedulerClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.SettingsBackupRestore,
+                        title = stringResource(R.string.backup_restore_title),
+                        subtitle = stringResource(R.string.backup_restore_desc),
+                        onClick = onBackupRestoreClick,
+                    )
+                    SettingsGroupDivider()
+                    val setupTint: Color? = if (state.setupDone == false) MaterialTheme.colorScheme.tertiary else null
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.PhoneAndroid,
+                        iconTint = setupTint,
+                        title = stringResource(CommonR.string.setup_title),
+                        subtitle = stringResource(R.string.setup_forcedshow_summary),
+                        onClick = onSetupClick,
+                    )
+                }
             }
 
             // Other category
             item { SettingsCategoryHeader(text = stringResource(R.string.settings_category_other_label)) }
 
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Stars,
-                    // Composed like the dashboard title card: the flavor's title template carries
-                    // the upgrade branding ("Pro" on GPLAY, "FOSS" on FOSS). Plain String because
-                    // that is what the settings item takes.
-                    title = brandTitleText(includeQualifier = true),
-                    subtitle = stringResource(R.string.settings_upgrade_description),
-                    onClick = onProClick,
-                )
-            }
-
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.ContactSupport,
-                    title = stringResource(R.string.settings_support_label),
-                    subtitle = stringResource(R.string.settings_support_description),
-                    onClick = onSupportClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Update,
-                    title = stringResource(R.string.changelog_label),
-                    subtitle = BuildConfigWrap.VERSION_DESCRIPTION,
-                    onClick = onChangelogClick,
-                    onLongClick = onChangelogLongClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Favorite,
-                    title = stringResource(R.string.settings_acknowledgements_label),
-                    subtitle = stringResource(CommonR.string.general_thank_you_label),
-                    onClick = onAcknowledgementsClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Policy,
-                    title = stringResource(R.string.settings_privacy_policy_label),
-                    subtitle = stringResource(R.string.settings_privacy_policy_desc),
-                    onClick = onPrivacyClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Stars,
+                        // Composed like the dashboard title card: the flavor's title template carries
+                        // the upgrade branding ("Pro" on GPLAY, "FOSS" on FOSS). Plain String because
+                        // that is what the settings item takes.
+                        title = brandTitleText(includeQualifier = true),
+                        subtitle = stringResource(R.string.settings_upgrade_description),
+                        onClick = onProClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.ContactSupport,
+                        title = stringResource(R.string.settings_support_label),
+                        subtitle = stringResource(R.string.settings_support_description),
+                        onClick = onSupportClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Update,
+                        title = stringResource(R.string.changelog_label),
+                        subtitle = BuildConfigWrap.VERSION_DESCRIPTION,
+                        onClick = onChangelogClick,
+                        onLongClick = onChangelogLongClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Favorite,
+                        title = stringResource(R.string.settings_acknowledgements_label),
+                        subtitle = stringResource(CommonR.string.general_thank_you_label),
+                        onClick = onAcknowledgementsClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Policy,
+                        title = stringResource(R.string.settings_privacy_policy_label),
+                        subtitle = stringResource(R.string.settings_privacy_policy_desc),
+                        onClick = onPrivacyClick,
+                    )
+                }
             }
         }
     }

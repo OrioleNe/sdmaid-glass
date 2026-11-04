@@ -25,6 +25,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.FeatureGateState
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingGate
 import eu.darken.sdmse.common.compose.settings.SettingsBadgedSwitchItem
 import eu.darken.sdmse.common.compose.settings.rememberGateClickHandler
@@ -101,42 +103,42 @@ internal fun AppControlSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.MonitorWeight,
-                    title = stringResource(R.string.appcontrol_settings_module_sizing_enabled_label),
-                    subtitle = stringResource(R.string.appcontrol_settings_module_sizing_enabled_description),
-                    checked = state.sizingEnabled,
-                    onCheckedChange = onSizingChanged,
-                    onBadgeClick = onSizingBadgeClick,
-                    gate = if (state.canInfoSize) null else SettingGate.SetupRequired,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.DirectionsRun,
-                    title = stringResource(R.string.appcontrol_settings_module_activity_enabled_label),
-                    subtitle = stringResource(R.string.appcontrol_settings_module_activity_enabled_description),
-                    checked = state.activityEnabled,
-                    onCheckedChange = onActivityChanged,
-                    onBadgeClick = onActivityBadgeClick,
-                    gate = if (state.canInfoActive) null else SettingGate.SetupRequired,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.Groups,
-                    title = stringResource(CommonR.string.general_include_multiuser_label),
-                    subtitle = multiUserSummary,
-                    // Non-Pro users see an unchecked switch regardless of the stored value.
-                    checked = state.isPro && state.multiUserEnabled,
-                    onCheckedChange = onMultiUserChanged,
-                    onBadgeClick = {
-                        gateClick(state.multiUserGate, multiUserBlockedMessage, onMultiUserBadgeClick)
-                    },
-                    gate = state.multiUserGate.toSettingGate(),
-                    requiresUpgrade = !state.isPro,
-                    onUpgrade = onMultiUserBadgeClick,
-                )
+                SettingsGroup {
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.MonitorWeight,
+                        title = stringResource(R.string.appcontrol_settings_module_sizing_enabled_label),
+                        subtitle = stringResource(R.string.appcontrol_settings_module_sizing_enabled_description),
+                        checked = state.sizingEnabled,
+                        onCheckedChange = onSizingChanged,
+                        onBadgeClick = onSizingBadgeClick,
+                        gate = if (state.canInfoSize) null else SettingGate.SetupRequired,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.DirectionsRun,
+                        title = stringResource(R.string.appcontrol_settings_module_activity_enabled_label),
+                        subtitle = stringResource(R.string.appcontrol_settings_module_activity_enabled_description),
+                        checked = state.activityEnabled,
+                        onCheckedChange = onActivityChanged,
+                        onBadgeClick = onActivityBadgeClick,
+                        gate = if (state.canInfoActive) null else SettingGate.SetupRequired,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.Groups,
+                        title = stringResource(CommonR.string.general_include_multiuser_label),
+                        subtitle = multiUserSummary,
+                        // Non-Pro users see an unchecked switch regardless of the stored value.
+                        checked = state.isPro && state.multiUserEnabled,
+                        onCheckedChange = onMultiUserChanged,
+                        onBadgeClick = {
+                            gateClick(state.multiUserGate, multiUserBlockedMessage, onMultiUserBadgeClick)
+                        },
+                        gate = state.multiUserGate.toSettingGate(),
+                        requiresUpgrade = !state.isPro,
+                        onUpgrade = onMultiUserBadgeClick,
+                    )
+                }
             }
         }
     }

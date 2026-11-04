@@ -27,6 +27,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
 import eu.darken.sdmse.common.compose.settings.dialogs.SizeInputDialog
@@ -125,25 +127,26 @@ internal fun AnalyzerSettingsScreen(
         ) {
             item { SettingsCategoryHeader(text = stringResource(R.string.analyzer_settings_storage_category_label)) }
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Storage,
-                    title = stringResource(R.string.analyzer_settings_lowstorage_title),
-                    subtitle = stringResource(R.string.analyzer_settings_lowstorage_desc),
-                    value = thresholdValue,
-                    onClick = { showThresholdDialog = true },
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.NotificationImportant,
-                    title = stringResource(R.string.analyzer_settings_lowspace_notification_title),
-                    subtitle = stringResource(R.string.analyzer_settings_lowspace_notification_desc),
-                    // Unchecked while not Pro regardless of the stored value.
-                    checked = state.isPro && state.notificationEnabled,
-                    onCheckedChange = onNotificationChanged,
-                    requiresUpgrade = !state.isPro,
-                    onUpgrade = onUpgradeClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Storage,
+                        title = stringResource(R.string.analyzer_settings_lowstorage_title),
+                        subtitle = stringResource(R.string.analyzer_settings_lowstorage_desc),
+                        value = thresholdValue,
+                        onClick = { showThresholdDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.NotificationImportant,
+                        title = stringResource(R.string.analyzer_settings_lowspace_notification_title),
+                        subtitle = stringResource(R.string.analyzer_settings_lowspace_notification_desc),
+                        // Unchecked while not Pro regardless of the stored value.
+                        checked = state.isPro && state.notificationEnabled,
+                        onCheckedChange = onNotificationChanged,
+                        requiresUpgrade = !state.isPro,
+                        onUpgrade = onUpgradeClick,
+                    )
+                }
             }
         }
     }

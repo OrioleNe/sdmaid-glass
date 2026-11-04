@@ -57,6 +57,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settleOnResize
 import eu.darken.sdmse.common.debug.logging.Logging.Priority.WARN
 import eu.darken.sdmse.common.debug.logging.log
@@ -208,31 +210,34 @@ internal fun BackupRestoreScreen(
                 }
             }
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Backup,
-                    title = stringResource(R.string.backup_restore_export_title),
-                    subtitle = stringResource(R.string.backup_restore_export_desc),
-                    onClick = { if (!state.isBusy) onExport() },
-                    requiresUpgrade = state.isPro == false,
-                    onUpgrade = onUpgrade,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.SettingsBackupRestore,
-                    title = stringResource(R.string.backup_restore_import_title),
-                    subtitle = stringResource(R.string.backup_restore_import_desc),
-                    onClick = { if (!state.isBusy) onImport() },
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Backup,
+                        title = stringResource(R.string.backup_restore_export_title),
+                        subtitle = stringResource(R.string.backup_restore_export_desc),
+                        onClick = { if (!state.isBusy) onExport() },
+                        requiresUpgrade = state.isPro == false,
+                        onUpgrade = onUpgrade,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.SettingsBackupRestore,
+                        title = stringResource(R.string.backup_restore_import_title),
+                        subtitle = stringResource(R.string.backup_restore_import_desc),
+                        onClick = { if (!state.isBusy) onImport() },
+                    )
+                }
             }
             if (state.recoveryBackup != null) {
                 item {
-                    SettingsPreferenceItem(
-                        icon = Icons.TwoTone.History,
-                        title = stringResource(R.string.backup_restore_recovery_title),
-                        subtitle = stringResource(R.string.backup_restore_recovery_desc),
-                        onClick = { if (!state.isBusy) onRecover() },
-                    )
+                    SettingsGroup {
+                        SettingsPreferenceItem(
+                            icon = Icons.TwoTone.History,
+                            title = stringResource(R.string.backup_restore_recovery_title),
+                            subtitle = stringResource(R.string.backup_restore_recovery_desc),
+                            onClick = { if (!state.isBusy) onRecover() },
+                        )
+                    }
                 }
             }
         }

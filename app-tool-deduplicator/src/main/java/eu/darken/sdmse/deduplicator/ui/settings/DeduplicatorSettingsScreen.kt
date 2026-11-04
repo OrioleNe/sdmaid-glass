@@ -30,6 +30,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTopAppBar
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
 import eu.darken.sdmse.common.compose.settings.dialogs.SizeInputDialog
@@ -124,87 +126,85 @@ internal fun DeduplicatorSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.FolderOpen,
-                    title = stringResource(R.string.deduplicator_search_locations_title),
-                    subtitle = scanPathsSummary,
-                    onClick = onSearchLocationsClick,
-                    onLongClick = onSearchLocationsLongClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Psychology,
-                    title = stringResource(R.string.deduplicator_arbiter_title),
-                    subtitle = stringResource(R.string.deduplicator_arbiter_summary),
-                    onClick = onArbiterConfigClick,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.Numeric0Box,
-                    title = stringResource(R.string.deduplicator_protection_deleteall_allowed_title),
-                    subtitle = stringResource(R.string.deduplicator_protection_deleteall_allowed_summary),
-                    checked = state.allowDeleteAll,
-                    onCheckedChange = onAllowDeleteAllChanged,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
-                    title = stringResource(R.string.deduplicator_skip_minsize_title),
-                    subtitle = stringResource(R.string.deduplicator_skip_minsize_description),
-                    value = Formatter.formatShortFileSize(context, state.minSizeBytes),
-                    onClick = { showSizeDialog = true },
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PlayCircleOutline,
-                    title = stringResource(R.string.deduplicator_skip_uncommon_title),
-                    subtitle = stringResource(R.string.deduplicator_skip_uncommon_description),
-                    checked = state.skipUncommon,
-                    onCheckedChange = onSkipUncommonChanged,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.FolderOpen,
+                        title = stringResource(R.string.deduplicator_search_locations_title),
+                        subtitle = scanPathsSummary,
+                        onClick = onSearchLocationsClick,
+                        onLongClick = onSearchLocationsLongClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Psychology,
+                        title = stringResource(R.string.deduplicator_arbiter_title),
+                        subtitle = stringResource(R.string.deduplicator_arbiter_summary),
+                        onClick = onArbiterConfigClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.Numeric0Box,
+                        title = stringResource(R.string.deduplicator_protection_deleteall_allowed_title),
+                        subtitle = stringResource(R.string.deduplicator_protection_deleteall_allowed_summary),
+                        checked = state.allowDeleteAll,
+                        onCheckedChange = onAllowDeleteAllChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.InsertDriveFile,
+                        title = stringResource(R.string.deduplicator_skip_minsize_title),
+                        subtitle = stringResource(R.string.deduplicator_skip_minsize_description),
+                        value = Formatter.formatShortFileSize(context, state.minSizeBytes),
+                        onClick = { showSizeDialog = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PlayCircleOutline,
+                        title = stringResource(R.string.deduplicator_skip_uncommon_title),
+                        subtitle = stringResource(R.string.deduplicator_skip_uncommon_description),
+                        checked = state.skipUncommon,
+                        onCheckedChange = onSkipUncommonChanged,
+                    )
+                }
             }
 
             item { SettingsCategoryHeader(text = stringResource(R.string.deduplicator_detection_method_label)) }
             item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.CodeEqualBox,
-                    title = stringResource(R.string.deduplicator_detection_method_checksum_title),
-                    subtitle = stringResource(R.string.deduplicator_detection_method_checksum_summary),
-                    checked = state.isSleuthChecksumEnabled,
-                    onCheckedChange = onSleuthChecksumChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.ApproximatelyEqualBox,
-                    title = stringResource(R.string.deduplicator_detection_method_phash_title),
-                    subtitle = stringResource(R.string.deduplicator_detection_method_phash_summary),
-                    checked = state.isSleuthPHashEnabled,
-                    onCheckedChange = onSleuthPHashChanged,
-                    content = if (state.isSleuthPHashEnabled) {
-                        { DetectionCaveatCard() }
-                    } else {
-                        null
-                    },
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.GraphicEq,
-                    title = stringResource(R.string.deduplicator_detection_method_media_title),
-                    subtitle = stringResource(R.string.deduplicator_detection_method_media_summary),
-                    checked = state.isSleuthMediaEnabled,
-                    onCheckedChange = onSleuthMediaChanged,
-                    content = if (state.isSleuthMediaEnabled) {
-                        { DetectionCaveatCard() }
-                    } else {
-                        null
-                    },
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = SdmIcons.CodeEqualBox,
+                        title = stringResource(R.string.deduplicator_detection_method_checksum_title),
+                        subtitle = stringResource(R.string.deduplicator_detection_method_checksum_summary),
+                        checked = state.isSleuthChecksumEnabled,
+                        onCheckedChange = onSleuthChecksumChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.ApproximatelyEqualBox,
+                        title = stringResource(R.string.deduplicator_detection_method_phash_title),
+                        subtitle = stringResource(R.string.deduplicator_detection_method_phash_summary),
+                        checked = state.isSleuthPHashEnabled,
+                        onCheckedChange = onSleuthPHashChanged,
+                        content = if (state.isSleuthPHashEnabled) {
+                            { DetectionCaveatCard() }
+                        } else {
+                            null
+                        },
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.GraphicEq,
+                        title = stringResource(R.string.deduplicator_detection_method_media_title),
+                        subtitle = stringResource(R.string.deduplicator_detection_method_media_summary),
+                        checked = state.isSleuthMediaEnabled,
+                        onCheckedChange = onSleuthMediaChanged,
+                        content = if (state.isSleuthMediaEnabled) {
+                            { DetectionCaveatCard() }
+                        } else {
+                            null
+                        },
+                    )
+                }
             }
         }
     }

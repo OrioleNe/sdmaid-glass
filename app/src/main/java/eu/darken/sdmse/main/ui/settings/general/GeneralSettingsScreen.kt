@@ -38,6 +38,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
 import eu.darken.sdmse.common.device.RomType
@@ -195,147 +197,151 @@ internal fun GeneralSettingsScreen(
             item { SettingsCategoryHeader(text = stringResource(R.string.dashboard_settings_category)) }
 
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.TouchApp,
-                    title = stringResource(R.string.dashboard_settings_oneclick_title),
-                    subtitle = stringResource(R.string.dashboard_settings_oneclick_summary),
-                    checked = state.enableDashboardOneClick,
-                    onCheckedChange = onOneClickChanged,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.ViewList,
-                    title = stringResource(R.string.dashboard_settings_oneclick_tools_title),
-                    subtitle = stringResource(R.string.dashboard_settings_oneclick_tools_desc),
-                    onClick = { showOneClickTools = true },
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Summarize,
-                    title = stringResource(R.string.dashboard_settings_summary_autoshow_title),
-                    subtitle = stringResource(R.string.dashboard_settings_summary_autoshow_summary),
-                    checked = state.dashboardSummaryAutoShow,
-                    onCheckedChange = onDashboardSummaryAutoShowChanged,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.GridView,
-                    title = stringResource(R.string.dashboard_card_config_title),
-                    subtitle = stringResource(R.string.dashboard_card_config_desc),
-                    onClick = onDashboardCardConfigClick,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.TouchApp,
+                        title = stringResource(R.string.dashboard_settings_oneclick_title),
+                        subtitle = stringResource(R.string.dashboard_settings_oneclick_summary),
+                        checked = state.enableDashboardOneClick,
+                        onCheckedChange = onOneClickChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.ViewList,
+                        title = stringResource(R.string.dashboard_settings_oneclick_tools_title),
+                        subtitle = stringResource(R.string.dashboard_settings_oneclick_tools_desc),
+                        onClick = { showOneClickTools = true },
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Summarize,
+                        title = stringResource(R.string.dashboard_settings_summary_autoshow_title),
+                        subtitle = stringResource(R.string.dashboard_settings_summary_autoshow_summary),
+                        checked = state.dashboardSummaryAutoShow,
+                        onCheckedChange = onDashboardSummaryAutoShowChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.GridView,
+                        title = stringResource(R.string.dashboard_card_config_title),
+                        subtitle = stringResource(R.string.dashboard_card_config_desc),
+                        onClick = onDashboardCardConfigClick,
+                    )
+                }
             }
 
             // Shortcuts category
             item { SettingsCategoryHeader(text = stringResource(R.string.shortcuts_settings_category)) }
 
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.TouchApp,
-                    title = stringResource(R.string.shortcuts_onetap_enabled_title),
-                    subtitle = stringResource(R.string.shortcuts_onetap_enabled_summary),
-                    checked = state.shortcutOneClickEnabled,
-                    onCheckedChange = onShortcutOneClickChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.TouchApp,
+                        title = stringResource(R.string.shortcuts_onetap_enabled_title),
+                        subtitle = stringResource(R.string.shortcuts_onetap_enabled_summary),
+                        checked = state.shortcutOneClickEnabled,
+                        onCheckedChange = onShortcutOneClickChanged,
+                    )
+                }
             }
 
             // Widget category
             item { SettingsCategoryHeader(text = stringResource(R.string.settings_category_widget)) }
 
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Widgets,
-                    title = stringResource(R.string.dashboard_settings_oneclick_title),
-                    subtitle = stringResource(R.string.widget_settings_oneclick_summary),
-                    checked = state.widgetOneClickEnabled,
-                    onCheckedChange = onWidgetOneClickChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Widgets,
+                        title = stringResource(R.string.dashboard_settings_oneclick_title),
+                        subtitle = stringResource(R.string.widget_settings_oneclick_summary),
+                        checked = state.widgetOneClickEnabled,
+                        onCheckedChange = onWidgetOneClickChanged,
+                    )
+                }
             }
 
             // UI category
             item { SettingsCategoryHeader(text = stringResource(R.string.settings_category_ui_label)) }
 
             item {
-                val themeModeLabel = when (state.themeMode) {
-                    ThemeMode.SYSTEM -> stringResource(R.string.ui_theme_mode_system_label)
-                    ThemeMode.DARK -> stringResource(R.string.ui_theme_mode_dark_label)
-                    ThemeMode.LIGHT -> stringResource(R.string.ui_theme_mode_light_label)
+                SettingsGroup {
+                    val themeModeLabel = when (state.themeMode) {
+                        ThemeMode.SYSTEM -> stringResource(R.string.ui_theme_mode_system_label)
+                        ThemeMode.DARK -> stringResource(R.string.ui_theme_mode_dark_label)
+                        ThemeMode.LIGHT -> stringResource(R.string.ui_theme_mode_light_label)
+                    }
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.DarkMode,
+                        title = stringResource(R.string.ui_theme_mode_setting_label),
+                        subtitle = stringResource(R.string.ui_theme_mode_setting_explanation),
+                        value = themeModeLabel,
+                        onClick = { showThemeModeDialog = true },
+                        requiresUpgrade = !state.isPro,
+                        onUpgrade = onThemeLockedClick,
+                    )
+                    SettingsGroupDivider()
+                    val themeStyleLabel = when (state.themeStyle) {
+                        ThemeStyle.DEFAULT -> stringResource(R.string.ui_theme_style_default_label)
+                        ThemeStyle.MATERIAL_YOU -> stringResource(R.string.ui_theme_style_materialyou_label)
+                        ThemeStyle.MEDIUM_CONTRAST -> stringResource(R.string.ui_theme_style_mediumcontrast_label)
+                        ThemeStyle.HIGH_CONTRAST -> stringResource(R.string.ui_theme_style_highcontrast_label)
+                    }
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.ColorLens,
+                        title = stringResource(R.string.ui_theme_style_setting_label),
+                        subtitle = stringResource(R.string.ui_theme_style_setting_explanation),
+                        value = themeStyleLabel,
+                        onClick = { showThemeStyleDialog = true },
+                        requiresUpgrade = !state.isPro,
+                        onUpgrade = onThemeLockedClick,
+                    )
+                    SettingsGroupDivider()
+                    val context = LocalContext.current
+                    val locked = !state.isPro
+                    val materialYouActive = state.themeStyle == ThemeStyle.MATERIAL_YOU && hasApiLevel(31)
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.Palette,
+                        title = stringResource(R.string.ui_theme_color_setting_label),
+                        subtitle = if (materialYouActive) {
+                            stringResource(R.string.ui_theme_color_setting_disabled_materialyou)
+                        } else {
+                            stringResource(R.string.ui_theme_color_setting_explanation)
+                        },
+                        value = if (materialYouActive) {
+                            stringResource(R.string.ui_theme_color_value_system)
+                        } else {
+                            state.themeColor.label.get(context)
+                        },
+                        // Stay clickable when locked so the upgrade tap still works,
+                        // even if the row would otherwise be disabled by Material You.
+                        enabled = !materialYouActive || locked,
+                        onClick = { if (!materialYouActive) showThemeColorDialog = true },
+                        requiresUpgrade = locked,
+                        onUpgrade = onThemeLockedClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Image,
+                        title = stringResource(R.string.ui_previews_title),
+                        subtitle = stringResource(R.string.ui_previews_summary),
+                        checked = state.usePreviews,
+                        onCheckedChange = onPreviewsChanged,
+                    )
                 }
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.DarkMode,
-                    title = stringResource(R.string.ui_theme_mode_setting_label),
-                    subtitle = stringResource(R.string.ui_theme_mode_setting_explanation),
-                    value = themeModeLabel,
-                    onClick = { showThemeModeDialog = true },
-                    requiresUpgrade = !state.isPro,
-                    onUpgrade = onThemeLockedClick,
-                )
-            }
-            item {
-                val themeStyleLabel = when (state.themeStyle) {
-                    ThemeStyle.DEFAULT -> stringResource(R.string.ui_theme_style_default_label)
-                    ThemeStyle.MATERIAL_YOU -> stringResource(R.string.ui_theme_style_materialyou_label)
-                    ThemeStyle.MEDIUM_CONTRAST -> stringResource(R.string.ui_theme_style_mediumcontrast_label)
-                    ThemeStyle.HIGH_CONTRAST -> stringResource(R.string.ui_theme_style_highcontrast_label)
-                }
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.ColorLens,
-                    title = stringResource(R.string.ui_theme_style_setting_label),
-                    subtitle = stringResource(R.string.ui_theme_style_setting_explanation),
-                    value = themeStyleLabel,
-                    onClick = { showThemeStyleDialog = true },
-                    requiresUpgrade = !state.isPro,
-                    onUpgrade = onThemeLockedClick,
-                )
-            }
-            item {
-                val context = LocalContext.current
-                val locked = !state.isPro
-                val materialYouActive = state.themeStyle == ThemeStyle.MATERIAL_YOU && hasApiLevel(31)
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.Palette,
-                    title = stringResource(R.string.ui_theme_color_setting_label),
-                    subtitle = if (materialYouActive) {
-                        stringResource(R.string.ui_theme_color_setting_disabled_materialyou)
-                    } else {
-                        stringResource(R.string.ui_theme_color_setting_explanation)
-                    },
-                    value = if (materialYouActive) {
-                        stringResource(R.string.ui_theme_color_value_system)
-                    } else {
-                        state.themeColor.label.get(context)
-                    },
-                    // Stay clickable when locked so the upgrade tap still works,
-                    // even if the row would otherwise be disabled by Material You.
-                    enabled = !materialYouActive || locked,
-                    onClick = { if (!materialYouActive) showThemeColorDialog = true },
-                    requiresUpgrade = locked,
-                    onUpgrade = onThemeLockedClick,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Image,
-                    title = stringResource(R.string.ui_previews_title),
-                    subtitle = stringResource(R.string.ui_previews_summary),
-                    checked = state.usePreviews,
-                    onCheckedChange = onPreviewsChanged,
-                )
             }
             if (state.showLanguage) {
                 item {
-                    val localeNames = state.currentLocales?.let { locales ->
-                        locales.toList().firstOrNull()?.displayName?.ifEmpty { locales.toString() }
-                    } ?: ""
-                    SettingsPreferenceItem(
-                        icon = Icons.TwoTone.Language,
-                        title = stringResource(R.string.ui_language_override_label),
-                        subtitle = stringResource(R.string.ui_language_override_desc, localeNames),
-                        onClick = onLanguageClick,
-                    )
+                    SettingsGroup {
+                        val localeNames = state.currentLocales?.let { locales ->
+                            locales.toList().firstOrNull()?.displayName?.ifEmpty { locales.toString() }
+                        } ?: ""
+                        SettingsPreferenceItem(
+                            icon = Icons.TwoTone.Language,
+                            title = stringResource(R.string.ui_language_override_label),
+                            subtitle = stringResource(R.string.ui_language_override_desc, localeNames),
+                            onClick = onLanguageClick,
+                        )
+                    }
                 }
             }
 
@@ -343,14 +349,16 @@ internal fun GeneralSettingsScreen(
             item { SettingsCategoryHeader(text = stringResource(R.string.device_settings_category)) }
 
             item {
-                val context = LocalContext.current
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.AccessibilityNew,
-                    title = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_automation_romtype_detection_label),
-                    subtitle = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_automation_romtype_detection_summary),
-                    value = state.romTypeDetection.label.get(context),
-                    onClick = { showRomTypeDialog = true },
-                )
+                SettingsGroup {
+                    val context = LocalContext.current
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.AccessibilityNew,
+                        title = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_automation_romtype_detection_label),
+                        subtitle = stringResource(eu.darken.sdmse.appcleaner.R.string.appcleaner_automation_romtype_detection_summary),
+                        value = state.romTypeDetection.label.get(context),
+                        onClick = { showRomTypeDialog = true },
+                    )
+                }
             }
 
             // Other category
@@ -358,40 +366,42 @@ internal fun GeneralSettingsScreen(
 
             if (state.isUpdateCheckSupported) {
                 item {
-                    SettingsSwitchItem(
-                        icon = Icons.TwoTone.SystemUpdate,
-                        title = stringResource(R.string.updatecheck_setting_enabled_label),
-                        subtitle = stringResource(R.string.updatecheck_setting_enabled_explanation),
-                        checked = state.isUpdateCheckEnabled,
-                        onCheckedChange = onUpdateCheckChanged,
-                    )
+                    SettingsGroup {
+                        SettingsSwitchItem(
+                            icon = Icons.TwoTone.SystemUpdate,
+                            title = stringResource(R.string.updatecheck_setting_enabled_label),
+                            subtitle = stringResource(R.string.updatecheck_setting_enabled_explanation),
+                            checked = state.isUpdateCheckEnabled,
+                            onCheckedChange = onUpdateCheckChanged,
+                        )
+                    }
                 }
             }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.Message,
-                    title = stringResource(R.string.motd_setting_enabled_label),
-                    subtitle = stringResource(R.string.motd_setting_enabled_explanation),
-                    checked = state.isMotdEnabled,
-                    onCheckedChange = onMotdChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.BugReport,
-                    title = stringResource(R.string.debug_mode_label),
-                    subtitle = stringResource(R.string.debug_mode_explanation),
-                    checked = state.isDebugMode,
-                    onCheckedChange = onDebugChanged,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.Help,
-                    title = stringResource(R.string.general_settings_reset_guided_tours_label),
-                    subtitle = stringResource(R.string.general_settings_reset_guided_tours_summary),
-                    onClick = onResetGuidedTours,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.Message,
+                        title = stringResource(R.string.motd_setting_enabled_label),
+                        subtitle = stringResource(R.string.motd_setting_enabled_explanation),
+                        checked = state.isMotdEnabled,
+                        onCheckedChange = onMotdChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.BugReport,
+                        title = stringResource(R.string.debug_mode_label),
+                        subtitle = stringResource(R.string.debug_mode_explanation),
+                        checked = state.isDebugMode,
+                        onCheckedChange = onDebugChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.Help,
+                        title = stringResource(R.string.general_settings_reset_guided_tours_label),
+                        subtitle = stringResource(R.string.general_settings_reset_guided_tours_summary),
+                        onClick = onResetGuidedTours,
+                    )
+                }
             }
         }
     }

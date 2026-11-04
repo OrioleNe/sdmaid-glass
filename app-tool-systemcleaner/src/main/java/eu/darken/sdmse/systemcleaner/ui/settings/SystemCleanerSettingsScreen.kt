@@ -48,6 +48,8 @@ import eu.darken.sdmse.common.access.AccessState
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.FeatureGateState
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsBadgedSwitchItem
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
@@ -199,257 +201,253 @@ internal fun SystemCleanerSettingsScreen(
         ) {
             item { SettingsCategoryHeader(text = stringResource(R.string.systemcleaner_filter_custom_label)) }
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.FilterAlt,
-                    title = stringResource(R.string.systemcleaner_filter_custom_manage_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_custom_manage_summary),
-                    onClick = onCustomFiltersClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.FilterAlt,
+                        title = stringResource(R.string.systemcleaner_filter_custom_manage_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_custom_manage_summary),
+                        onClick = onCustomFiltersClick,
+                    )
+                }
             }
 
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.settings_category_filter_generic)) }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.systemcleaner_filter_logfiles_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_logfiles_summary),
-                    checked = state.filterLogFiles,
-                    onCheckedChange = onLogFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.AdsClick,
-                    title = stringResource(R.string.systemcleaner_filter_advertisements_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_advertisements_summary),
-                    checked = state.filterAdvertisements,
-                    onCheckedChange = onAdvertisementsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.FolderOpen,
-                    title = stringResource(R.string.systemcleaner_filter_emptydirectories_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_emptydirectories_summary),
-                    checked = state.filterEmptyDirectories,
-                    onCheckedChange = onEmptyDirectoriesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Inventory2,
-                    title = stringResource(R.string.systemcleaner_filter_superfluosapks_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_superfluosapks_summary),
-                    checked = state.filterSuperfluosApks,
-                    onCheckedChange = onSuperfluosApksChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.systemcleaner_filter_logfiles_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_logfiles_summary),
+                        checked = state.filterLogFiles,
+                        onCheckedChange = onLogFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.AdsClick,
+                        title = stringResource(R.string.systemcleaner_filter_advertisements_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_advertisements_summary),
+                        checked = state.filterAdvertisements,
+                        onCheckedChange = onAdvertisementsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.FolderOpen,
+                        title = stringResource(R.string.systemcleaner_filter_emptydirectories_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_emptydirectories_summary),
+                        checked = state.filterEmptyDirectories,
+                        onCheckedChange = onEmptyDirectoriesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Inventory2,
+                        title = stringResource(R.string.systemcleaner_filter_superfluosapks_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_superfluosapks_summary),
+                        checked = state.filterSuperfluosApks,
+                        onCheckedChange = onSuperfluosApksChanged,
+                    )
+                }
             }
             if (state.filterSuperfluosApks) {
                 item {
-                    SettingsSwitchItem(
-                        icon = SdmIcons.ApproximatelyEqual,
-                        title = stringResource(R.string.systemcleaner_filter_superfluosapks_includesameversion_label),
-                        subtitle = stringResource(R.string.systemcleaner_filter_superfluosapks_includesameversion_summary),
-                        checked = state.filterSuperfluosApksIncludeSameVersion,
-                        onCheckedChange = onSuperfluosApksIncludeSameVersionChanged,
-                    )
+                    SettingsGroup {
+                        SettingsSwitchItem(
+                            icon = SdmIcons.ApproximatelyEqual,
+                            title = stringResource(R.string.systemcleaner_filter_superfluosapks_includesameversion_label),
+                            subtitle = stringResource(R.string.systemcleaner_filter_superfluosapks_includesameversion_summary),
+                            checked = state.filterSuperfluosApksIncludeSameVersion,
+                            onCheckedChange = onSuperfluosApksIncludeSameVersionChanged,
+                        )
+                    }
                 }
             }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.DeleteForever,
-                    title = stringResource(R.string.systemcleaner_filter_trashed_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_trashed_summary),
-                    checked = state.filterTrashed,
-                    onCheckedChange = onTrashedChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.PhoneIphone,
-                    title = stringResource(R.string.systemcleaner_filter_screenshots_label),
-                    subtitle = stringResource(
-                        R.string.systemcleaner_filter_screenshots_summary,
-                        formatAge(context, state.screenshotsAge),
-                    ),
-                    checked = state.filterScreenshots,
-                    onCheckedChange = onScreenshotsChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.DeleteForever,
+                        title = stringResource(R.string.systemcleaner_filter_trashed_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_trashed_summary),
+                        checked = state.filterTrashed,
+                        onCheckedChange = onTrashedChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.PhoneIphone,
+                        title = stringResource(R.string.systemcleaner_filter_screenshots_label),
+                        subtitle = stringResource(
+                            R.string.systemcleaner_filter_screenshots_summary,
+                            formatAge(context, state.screenshotsAge),
+                        ),
+                        checked = state.filterScreenshots,
+                        onCheckedChange = onScreenshotsChanged,
+                    )
+                }
             }
             if (state.filterScreenshots) {
                 item {
-                    SettingsPreferenceItem(
-                        icon = Icons.TwoTone.History,
-                        title = stringResource(R.string.systemcleaner_filter_screenshots_age_label),
-                        subtitle = stringResource(R.string.systemcleaner_filter_screenshots_age_summary),
-                        value = formatAge(context, state.screenshotsAge),
-                        onClick = { showScreenshotAgeDialog = true },
-                    )
+                    SettingsGroup {
+                        SettingsPreferenceItem(
+                            icon = Icons.TwoTone.History,
+                            title = stringResource(R.string.systemcleaner_filter_screenshots_age_label),
+                            subtitle = stringResource(R.string.systemcleaner_filter_screenshots_age_summary),
+                            value = formatAge(context, state.screenshotsAge),
+                            onClick = { showScreenshotAgeDialog = true },
+                        )
+                    }
                 }
             }
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Usb,
-                    title = stringResource(R.string.systemcleaner_filter_lostdir_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_lostdir_summary),
-                    checked = state.filterLostDir,
-                    onCheckedChange = onLostDirChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.Penguin,
-                    title = stringResource(R.string.systemcleaner_filter_linuxfiles_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_linuxfiles_summary),
-                    checked = state.filterLinuxFiles,
-                    onCheckedChange = onLinuxFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.OsMac,
-                    title = stringResource(R.string.systemcleaner_filter_macfiles_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_macfiles_summary),
-                    checked = state.filterMacFiles,
-                    onCheckedChange = onMacFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = SdmIcons.OsWindows,
-                    title = stringResource(R.string.systemcleaner_filter_windowsfiles_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_windowsfiles_summary),
-                    checked = state.filterWindowsFiles,
-                    onCheckedChange = onWindowsFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.AccessTimeFilled,
-                    title = stringResource(R.string.systemcleaner_filter_tempfiles_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_tempfiles_summary),
-                    checked = state.filterTempFiles,
-                    onCheckedChange = onTempFilesChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.ThumbUp,
-                    title = stringResource(R.string.systemcleaner_filter_thumbnails_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_thumbnails_summary),
-                    checked = state.filterThumbnails,
-                    onCheckedChange = onThumbnailsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Analytics,
-                    title = stringResource(R.string.systemcleaner_filter_analytics_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_analytics_summary),
-                    checked = state.filterAnalytics,
-                    onCheckedChange = onAnalyticsChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Usb,
+                        title = stringResource(R.string.systemcleaner_filter_lostdir_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_lostdir_summary),
+                        checked = state.filterLostDir,
+                        onCheckedChange = onLostDirChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.Penguin,
+                        title = stringResource(R.string.systemcleaner_filter_linuxfiles_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_linuxfiles_summary),
+                        checked = state.filterLinuxFiles,
+                        onCheckedChange = onLinuxFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.OsMac,
+                        title = stringResource(R.string.systemcleaner_filter_macfiles_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_macfiles_summary),
+                        checked = state.filterMacFiles,
+                        onCheckedChange = onMacFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = SdmIcons.OsWindows,
+                        title = stringResource(R.string.systemcleaner_filter_windowsfiles_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_windowsfiles_summary),
+                        checked = state.filterWindowsFiles,
+                        onCheckedChange = onWindowsFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.AccessTimeFilled,
+                        title = stringResource(R.string.systemcleaner_filter_tempfiles_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_tempfiles_summary),
+                        checked = state.filterTempFiles,
+                        onCheckedChange = onTempFilesChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.ThumbUp,
+                        title = stringResource(R.string.systemcleaner_filter_thumbnails_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_thumbnails_summary),
+                        checked = state.filterThumbnails,
+                        onCheckedChange = onThumbnailsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Analytics,
+                        title = stringResource(R.string.systemcleaner_filter_analytics_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_analytics_summary),
+                        checked = state.filterAnalytics,
+                        onCheckedChange = onAnalyticsChanged,
+                    )
+                }
             }
 
             item { SettingsCategoryHeader(text = stringResource(CommonR.string.settings_category_filter_specific)) }
             item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.RunningWithErrors,
-                    title = stringResource(R.string.systemcleaner_filter_anr_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_anr_summary),
-                    checked = state.filterAnr,
-                    onCheckedChange = onAnrChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = SdmIcons.AndroidStudio,
-                    title = stringResource(R.string.systemcleaner_filter_localtmp_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_localtmp_summary),
-                    checked = state.filterLocalTmp,
-                    onCheckedChange = onLocalTmpChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = SdmIcons.AndroidStudio,
-                    title = stringResource(R.string.systemcleaner_filter_downloadcache_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_downloadcache_summary),
-                    checked = state.filterDownloadCache,
-                    onCheckedChange = onDownloadCacheChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.systemcleaner_filter_datalogger_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_datalogger_summary),
-                    checked = state.filterDataLogger,
-                    onCheckedChange = onDataLoggerChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
-                    title = stringResource(R.string.systemcleaner_filter_logdropbox_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_logdropbox_summary),
-                    checked = state.filterLogDropbox,
-                    onCheckedChange = onLogDropboxChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.TaskAlt,
-                    title = stringResource(R.string.systemcleaner_filter_recenttasks_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_recenttasks_summary),
-                    checked = state.filterRecentTasks,
-                    onCheckedChange = onRecentTasksChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = SdmIcons.Tombstone,
-                    title = stringResource(R.string.systemcleaner_filter_tombstones_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_tombstones_summary),
-                    checked = state.filterTombstones,
-                    onCheckedChange = onTombstonesChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.StackedBarChart,
-                    title = stringResource(R.string.systemcleaner_filter_usagestats_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_usagestats_summary),
-                    checked = state.filterUsageStats,
-                    onCheckedChange = onUsageStatsChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
-            }
-            item {
-                SettingsBadgedSwitchItem(
-                    icon = Icons.TwoTone.Apps,
-                    title = stringResource(R.string.systemcleaner_filter_packagecaches_label),
-                    subtitle = stringResource(R.string.systemcleaner_filter_packagecaches_summary),
-                    checked = state.filterPackageCache,
-                    onCheckedChange = onPackageCacheChanged,
-                    onBadgeClick = onRootGateClick,
-                    gate = rootGate,
-                )
+                SettingsGroup {
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.RunningWithErrors,
+                        title = stringResource(R.string.systemcleaner_filter_anr_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_anr_summary),
+                        checked = state.filterAnr,
+                        onCheckedChange = onAnrChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = SdmIcons.AndroidStudio,
+                        title = stringResource(R.string.systemcleaner_filter_localtmp_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_localtmp_summary),
+                        checked = state.filterLocalTmp,
+                        onCheckedChange = onLocalTmpChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = SdmIcons.AndroidStudio,
+                        title = stringResource(R.string.systemcleaner_filter_downloadcache_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_downloadcache_summary),
+                        checked = state.filterDownloadCache,
+                        onCheckedChange = onDownloadCacheChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.systemcleaner_filter_datalogger_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_datalogger_summary),
+                        checked = state.filterDataLogger,
+                        onCheckedChange = onDataLoggerChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.AutoMirrored.TwoTone.FormatListBulleted,
+                        title = stringResource(R.string.systemcleaner_filter_logdropbox_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_logdropbox_summary),
+                        checked = state.filterLogDropbox,
+                        onCheckedChange = onLogDropboxChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.TaskAlt,
+                        title = stringResource(R.string.systemcleaner_filter_recenttasks_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_recenttasks_summary),
+                        checked = state.filterRecentTasks,
+                        onCheckedChange = onRecentTasksChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = SdmIcons.Tombstone,
+                        title = stringResource(R.string.systemcleaner_filter_tombstones_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_tombstones_summary),
+                        checked = state.filterTombstones,
+                        onCheckedChange = onTombstonesChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.StackedBarChart,
+                        title = stringResource(R.string.systemcleaner_filter_usagestats_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_usagestats_summary),
+                        checked = state.filterUsageStats,
+                        onCheckedChange = onUsageStatsChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                    SettingsGroupDivider()
+                    SettingsBadgedSwitchItem(
+                        icon = Icons.TwoTone.Apps,
+                        title = stringResource(R.string.systemcleaner_filter_packagecaches_label),
+                        subtitle = stringResource(R.string.systemcleaner_filter_packagecaches_summary),
+                        checked = state.filterPackageCache,
+                        onCheckedChange = onPackageCacheChanged,
+                        onBadgeClick = onRootGateClick,
+                        gate = rootGate,
+                    )
+                }
             }
         }
     }

@@ -35,6 +35,8 @@ import eu.darken.sdmse.common.compose.icons.Github
 import eu.darken.sdmse.common.compose.icons.SdmIcons
 import eu.darken.sdmse.common.compose.layout.SdmTooltipIconButton
 import eu.darken.sdmse.common.compose.settings.SettingsCategoryHeader
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.compose.settings.SettingsPreferenceItem
 import eu.darken.sdmse.common.debug.recorder.ui.RecorderConsentDialog
 import eu.darken.sdmse.common.debug.recorder.ui.ShortRecordingDialog
@@ -146,73 +148,73 @@ internal fun SupportScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.MenuBook,
-                    title = stringResource(R.string.documentation_label),
-                    onClick = onDocumentationClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = SdmIcons.Github,
-                    title = stringResource(R.string.issue_tracker_label),
-                    subtitle = stringResource(R.string.issue_tracker_description),
-                    onClick = onIssueTrackerClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = SdmIcons.Discord,
-                    title = stringResource(R.string.discord_label),
-                    subtitle = stringResource(R.string.discord_description),
-                    onClick = onDiscordClick,
-                )
-            }
-            item {
-                SettingsPreferenceItem(
-                    icon = Icons.AutoMirrored.TwoTone.ContactSupport,
-                    title = stringResource(R.string.support_contact_label),
-                    subtitle = stringResource(R.string.support_contact_desc),
-                    onClick = onContactClick,
-                )
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.MenuBook,
+                        title = stringResource(R.string.documentation_label),
+                        onClick = onDocumentationClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = SdmIcons.Github,
+                        title = stringResource(R.string.issue_tracker_label),
+                        subtitle = stringResource(R.string.issue_tracker_description),
+                        onClick = onIssueTrackerClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = SdmIcons.Discord,
+                        title = stringResource(R.string.discord_label),
+                        subtitle = stringResource(R.string.discord_description),
+                        onClick = onDiscordClick,
+                    )
+                    SettingsGroupDivider()
+                    SettingsPreferenceItem(
+                        icon = Icons.AutoMirrored.TwoTone.ContactSupport,
+                        title = stringResource(R.string.support_contact_label),
+                        subtitle = stringResource(R.string.support_contact_desc),
+                        onClick = onContactClick,
+                    )
+                }
             }
 
             // Other
             item { SettingsCategoryHeader(text = stringResource(R.string.settings_category_other_label)) }
 
             item {
-                SettingsPreferenceItem(
-                    icon = if (isRecording) Icons.TwoTone.Cancel else Icons.TwoTone.BugReport,
-                    title = stringResource(
-                        if (isRecording) R.string.debug_debuglog_stop_action
-                        else R.string.debug_debuglog_record_action
-                    ),
-                    subtitle = stringResource(R.string.support_debuglog_desc),
-                    onClick = { onDebugLogClick(isRecording) },
-                    // Title flips with the recording state — a stable key keeps focus memory
-                    // working across the toggle.
-                    focusKey = "support.debuglog.toggle",
-                )
-            }
-            item {
-                val folderSummary = if (folderStats.sessionCount == 0) {
-                    stringResource(R.string.support_debuglog_folder_empty_desc)
-                } else {
-                    val formattedSize = Formatter.formatShortFileSize(context, folderStats.totalSizeBytes)
-                    context.resources.getQuantityString(
-                        R.plurals.support_debuglog_folder_desc,
-                        folderStats.sessionCount,
-                        folderStats.sessionCount,
-                        formattedSize,
+                SettingsGroup {
+                    SettingsPreferenceItem(
+                        icon = if (isRecording) Icons.TwoTone.Cancel else Icons.TwoTone.BugReport,
+                        title = stringResource(
+                            if (isRecording) R.string.debug_debuglog_stop_action
+                            else R.string.debug_debuglog_record_action
+                        ),
+                        subtitle = stringResource(R.string.support_debuglog_desc),
+                        onClick = { onDebugLogClick(isRecording) },
+                        // Title flips with the recording state — a stable key keeps focus memory
+                        // working across the toggle.
+                        focusKey = "support.debuglog.toggle",
+                    )
+                    SettingsGroupDivider()
+                    val folderSummary = if (folderStats.sessionCount == 0) {
+                        stringResource(R.string.support_debuglog_folder_empty_desc)
+                    } else {
+                        val formattedSize = Formatter.formatShortFileSize(context, folderStats.totalSizeBytes)
+                        context.resources.getQuantityString(
+                            R.plurals.support_debuglog_folder_desc,
+                            folderStats.sessionCount,
+                            folderStats.sessionCount,
+                            formattedSize,
+                        )
+                    }
+                    SettingsPreferenceItem(
+                        icon = Icons.TwoTone.FolderOpen,
+                        title = stringResource(R.string.support_debuglog_folder_label),
+                        subtitle = folderSummary,
+                        enabled = !isRecording,
+                        onClick = onDebugLogFolderClick,
                     )
                 }
-                SettingsPreferenceItem(
-                    icon = Icons.TwoTone.FolderOpen,
-                    title = stringResource(R.string.support_debuglog_folder_label),
-                    subtitle = folderSummary,
-                    enabled = !isRecording,
-                    onClick = onDebugLogFolderClick,
-                )
             }
         }
     }

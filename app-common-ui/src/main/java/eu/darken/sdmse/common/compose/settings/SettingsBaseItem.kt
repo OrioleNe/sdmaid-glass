@@ -1,6 +1,5 @@
 package eu.darken.sdmse.common.compose.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Settings
 import androidx.compose.material3.Icon
@@ -20,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -51,20 +48,9 @@ fun SettingsBaseItem(
     trailingContent: @Composable (() -> Unit)? = null,
     content: @Composable (() -> Unit)? = null,
 ) {
-    val contentAlpha = if (enabled) 1f else 0.5f
-
-    // Kiểu iOS: phần điều khiển nằm trong một thẻ bo góc, còn ghi chú (subtitle)
-    // nằm bên dưới thẻ, chữ xám nhỏ.
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
-    ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainer)
             // Before combinedClickable so the requester/observer attach to the row's focus
             // target. Keyed by title unless the caller overrides (rows with dynamic titles).
             .dpadFocusMemoryItem(focusKey ?: title)
@@ -73,8 +59,9 @@ fun SettingsBaseItem(
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
     ) {
+        val contentAlpha = if (enabled) 1f else 0.5f
         val hasIcon = icon != null || iconPainter != null
         val tint = when {
             iconTint != null -> iconTint.copy(alpha = iconTint.alpha * contentAlpha)
@@ -137,20 +124,19 @@ fun SettingsBaseItem(
             trailingContent?.invoke()
         }
 
+        if (subtitle != null) {
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = contentAlpha),
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
+
         if (content != null) {
             Spacer(Modifier.height(12.dp))
             content()
         }
-    }
-
-    if (subtitle != null) {
-        Text(
-            text = subtitle,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f * contentAlpha),
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 6.dp),
-        )
-    }
     }
 }
 

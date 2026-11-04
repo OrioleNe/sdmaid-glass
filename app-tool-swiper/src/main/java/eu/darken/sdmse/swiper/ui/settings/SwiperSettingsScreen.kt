@@ -19,6 +19,8 @@ import eu.darken.sdmse.common.compose.layout.SdmTopAppBar
 import eu.darken.sdmse.common.compose.preview.Preview2
 import eu.darken.sdmse.common.compose.preview.PreviewWrapper
 import eu.darken.sdmse.common.compose.settings.SettingsSwitchItem
+import eu.darken.sdmse.common.compose.settings.SettingsGroup
+import eu.darken.sdmse.common.compose.settings.SettingsGroupDivider
 import eu.darken.sdmse.common.error.ErrorEventHandler
 import eu.darken.sdmse.common.navigation.NavigationEventHandler
 import eu.darken.sdmse.swiper.R
@@ -71,31 +73,31 @@ internal fun SwiperSettingsScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.SwapHoriz,
-                    title = stringResource(R.string.swiper_settings_swap_directions_title),
-                    subtitle = stringResource(R.string.swiper_settings_swap_directions_summary),
-                    checked = state.swapSwipeDirections,
-                    onCheckedChange = onSwapDirectionsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Info,
-                    title = stringResource(R.string.swiper_settings_show_details_title),
-                    subtitle = stringResource(R.string.swiper_settings_show_details_summary),
-                    checked = state.showFileDetailsOverlay,
-                    onCheckedChange = onShowDetailsChanged,
-                )
-            }
-            item {
-                SettingsSwitchItem(
-                    icon = Icons.TwoTone.Vibration,
-                    title = stringResource(R.string.swiper_settings_haptic_feedback_title),
-                    subtitle = stringResource(R.string.swiper_settings_haptic_feedback_summary),
-                    checked = state.hapticFeedbackEnabled,
-                    onCheckedChange = onHapticFeedbackChanged,
-                )
+                SettingsGroup {
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.SwapHoriz,
+                        title = stringResource(R.string.swiper_settings_swap_directions_title),
+                        subtitle = stringResource(R.string.swiper_settings_swap_directions_summary),
+                        checked = state.swapSwipeDirections,
+                        onCheckedChange = onSwapDirectionsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Info,
+                        title = stringResource(R.string.swiper_settings_show_details_title),
+                        subtitle = stringResource(R.string.swiper_settings_show_details_summary),
+                        checked = state.showFileDetailsOverlay,
+                        onCheckedChange = onShowDetailsChanged,
+                    )
+                    SettingsGroupDivider()
+                    SettingsSwitchItem(
+                        icon = Icons.TwoTone.Vibration,
+                        title = stringResource(R.string.swiper_settings_haptic_feedback_title),
+                        subtitle = stringResource(R.string.swiper_settings_haptic_feedback_summary),
+                        checked = state.hapticFeedbackEnabled,
+                        onCheckedChange = onHapticFeedbackChanged,
+                    )
+                }
             }
         }
     }
